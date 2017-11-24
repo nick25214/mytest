@@ -180,3 +180,16 @@ func (this *RedisMQ) IsStart() bool {
 func (this *RedisMQ) IsClose() bool {
 	return !this.IsStart()
 }
+
+func (this *RedisMQ) SetSource(name string) error {
+	this.locker.Lock()
+	defer this.locker.Unlock()
+	this.src = &name
+	return nil
+}
+func (this *RedisMQ) SetDestination(name string) error {
+	this.locker.Lock()
+	defer this.locker.Unlock()
+	this.dest = &name
+	return nil
+}

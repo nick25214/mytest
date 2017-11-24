@@ -56,3 +56,14 @@ func (this *AbstractMQ) IsStart() bool {
 func (this *AbstractMQ) IsClose() bool {
 	return false
 }
+
+func (this *AbstractMQ) Ack() error {
+	return nil
+}
+
+func (this *AbstractMQ) SetSource(name string) error {
+	return nil
+}
+func (this *AbstractMQ) SetDestination(name string) error {
+	return nil
+}

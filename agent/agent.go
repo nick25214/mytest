@@ -118,6 +118,21 @@ func (this *Agent) GetFreeSender() *MQState {
 	return nil
 }
 
+func (this *Agent) SetSource(name string) {
+	this.rcvLocker.Lock()
+	defer this.rcvLocker.Unlock()
+	for _, m := range this.rcvPool {
+		m.mq.SetSource(name)
+	}
+}
+func (this *Agent) SetDestination(name string) {
+	this.sendLocker.Lock()
+	defer this.sendLocker.Unlock()
+	for _, m := range this.sendPool {
+		m.mq.SetDestination(name)
+	}
+}
+
 func (this *Agent) GetFreeRcv() *MQState {
 	//time.Sleep(10 * time.Microsecond)
 	this.rcvLocker.Lock()

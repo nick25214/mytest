@@ -14,8 +14,6 @@ const (
 	MQTypeTest  MQType = "ps.micro.service.testmq"
 )
 
-var mqPool map[int]MQ
-
 type MQServer struct {
 	ServerCfg interface{}
 	MQEnginge MQType
@@ -34,6 +32,9 @@ type MQ interface {
 	GetMQSettings() (MQServer, error)
 	SrcLen() int64
 	DestLen() int64
+	SetSource(name string) error
+	SetDestination(name string) error
+	Ack() error
 }
 
 func CreateMQ() (MQ, error) {
@@ -44,7 +45,7 @@ func CreateMQ() (MQ, error) {
 	}
 
 	if engine == MQTypeTest {
-		q = &TestMQ{}
+		q = &LocalMQ{}
 	}
 
 	queue, err := q.connect(loadServerConfig(engine))
